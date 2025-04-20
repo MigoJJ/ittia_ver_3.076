@@ -16,6 +16,11 @@ public class EMRPMHAllergy extends JFrame {
     private static DefaultTableModel tableModel, eastTableModel;
     private static JTextArea textArea;
     private static EMRPMHAllergy instance;
+    private static String default_comment = """
+    	    ▣ Allergy\n
+    	    During the medical check-up, the patient had no known allergies\n
+    	    to food, injections and medications as of :cd \n
+    	    """;
 
     public EMRPMHAllergy() {
         setTitle("Allergy Data Input");
@@ -90,20 +95,25 @@ String[] otherSymptoms = {
                 "sulfa drugs (sulfamethoxazole, trimethoprim-sulfamethoxazole).",
                 "Anesthesia: anesthetic medications such as propofol, ",
                 "Dust Mite",
-                
+                ".......",
                 "Antibiotics : penicillin and its derivatives ",
                 "Antibiotics : Cephalosporins",
-                
-                "Food : 우유 (uyu): Milk",
-                "Food : 계란 (gyeran): Eggs",
-                "Food : 땅콩 (ttangkong): Peanuts",
-                "Food : 견과류 (gyeongwaryu): Tree nuts (e.g., 호두 - walnuts, 아몬드 - almonds, 캐슈넛 - cashews)",
-                "Food : 콩 (kong): Soybeans",
-                "Food : 밀 (mil): Wheat",
-                "Food : 생선 (saengseon): Fish (e.g., 고등어 - mackerel, 연어 - salmon, 참치 - tuna)",
-                "Food : 갑각류 (gabgagryu): Shellfish (e.g., 새우 - shrimp, 게 - crab, 가리비 - scallops)",
-                "Food : 복숭아 (boksuong-a): Peach (and sometimes other stone fruits like apricots and plums due to cross-reactivity)",
-                "Food : 메밀 (memil): Buckwheat"
+                "Medications : Alendronate",
+                "Medications : Statin",
+                "Medications : Metformin",
+                "Medications : SGLT-2",
+                "injections : Tramadol HCl inj. Huons",
+                ".......",
+                "Food : 우유 : Milk",
+                "Food : 계란 : Eggs",
+                "Food : 땅콩 : Peanuts",
+                "Food : 견과류 : Tree nuts (e.g., 호두 - walnuts, 아몬드 - almonds, 캐슈넛 - cashews)",
+                "Food : 콩 : Soybeans",
+                "Food : 밀 : Wheat",
+                "Food : 생선 : Fish (e.g., 고등어 - mackerel, 연어 - salmon, 참치 - tuna)",
+                "Food : 갑각류 : Shellfish (e.g., 새우 - shrimp, 게 - crab, 가리비 - scallops)",
+                "Food : 복숭아 : Peach (and sometimes other stone fruits like apricots and plums due to cross-reactivity)",
+                "Food : 메밀 : Buckwheat"
         };
 
         eastTableModel = new DefaultTableModel(new Object[][]{}, columnNames);
@@ -129,7 +139,7 @@ String[] otherSymptoms = {
 
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel(new FlowLayout());
-        String[] buttonLabels = {"All denied", "Anaphylaxis denied", "Clear", "Save", "Quit"};
+        String[] buttonLabels = {"Default","All denied", "Anaphylaxis denied", "Clear", "Save", "Quit"};
 
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
@@ -142,6 +152,7 @@ String[] otherSymptoms = {
 
     private void handleButtonAction(String action) {
         switch (action) {
+        	 case "Default" -> textArea.setText(default_comment);
             case "All denied" -> setSymptoms(false, false);
             case "Anaphylaxis denied" -> setSymptoms(true, false);
             case "Clear" -> textArea.setText("");
